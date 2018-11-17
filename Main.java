@@ -5,6 +5,7 @@ public class Main
   public static boolean hasLooked = false;
   public static boolean hasMatches = false;
   public static int matches = 30;
+  public static boolean hasTouchedBooks = false;
   public static void main (String[]args)
   {
     initialize ();
@@ -20,7 +21,7 @@ public class Main
     String input = scan.nextLine ();
     check (input);
   }
-  public static void check (String input)
+  public static String check (String input)
   {
     if (room == 0)
       {
@@ -72,10 +73,70 @@ public class Main
 	    matches--;
 	    System.out.printf ("You strike the match, and as it sparks to life, you are transported somewhere new. You have %d matches left.\n",
 	       matches);
+	       hasLooked = false;
 	  }
 	seekInput ();
       }
     if (room == 1)
-      System.out.print ("You win!");
+      {
+          if (input.equals ("help"))
+	  {
+	    System.out.println ("\nThese are all actions you can take right now:");
+
+	    if (hasLooked == false)
+	      {
+		System.out.print ("look  |   help\n");
+	      }
+	    if (hasLooked == true)
+	      {
+	   System.out.print ("look  |   help\n");
+	      }
+	    if ((hasTouchedBooks == false) && (hasLooked == true))
+	      {
+	   System.out.print ("touch");
+	      }
+	      
+	   System.out.println ("\nThese are all the things you can interact with right now:");
+	    if (hasLooked == false)
+	      {
+		System.out.print ("\n");
+	      }
+	    if ((hasLooked == true) && (hasTouchedBooks == true))
+	      {
+		System.out.print ("desk  |  stair\n");
+	      }
+	    if ((hasLooked == true) && (hasTouchedBooks == false))
+	      {
+		System.out.print ("desk  |  stair\nbooks\n");
+	      }
+	    }
+	    if (input.equals ("look")){
+	      hasLooked = true;
+	      System.out.println("You find yourself in total darkness aside from the light emitted from your match, which is already beginning to dwindle. You will have to routinely light them if you want to see anything from here on out.\nAs your eyes begin to adjust to the darkness, you come to the conclusion you are in some sort of study. Piles of books loom menacingly over you, threatening to topple at any moment. An ornate wooden desk sits before you. A set of stairs spirals overhead, peculiarly ending a good ten feet above the floor.\n");
+	      matchCount();
+	    }
+	    if (input.equals ("look books")){
+	      System.out.println("You examine a column of tomes, noticing only now how truly precarious each books position is. It almost begs you to touch it.\n");
+	      matchCount();
+	    }
+	    if (input.equals ("touch books")){
+	      System.out.println("You lay a finger upon the spine of a rather weighty book situated in the middle of the stack and apply the slightest pressure. In one great avalance of knowledge, you find yourself knocked on the floor, covered in a mountain of literature and paper cuts. It seems you lost a few matches in the whole ordeal.");
+	      matches -= 4;
+	      matchCount();
+	      hasTouchedBooks = true;
+	    }
+	   if(matches <= 0){
+	     System.out.println("You have succumbed to the darkness.");
+	     return "Fail";
+	   }
+	    seekInput();
+    }
+  return "Fail";
+    
   }
+  public static void matchCount(){
+      matches--;
+      if (matches >= 0)
+      System.out.printf("You have %d matches left.\n",matches);
+    }
 }
