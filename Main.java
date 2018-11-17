@@ -3,6 +3,7 @@ public class Main{
     public static int room = 0;
     public static boolean hasLooked = false;
     public static boolean hasMatches = false;
+    public static int matches = 30;
     public static void main(String[] args){
         initialize();
         
@@ -17,31 +18,31 @@ public class Main{
         check(input);
     }
     public static void check(String input){
+        if(room == 0){
         if(input.equals("help")){
         System.out.println("\nThese are all actions you can take right now:");
-        if(room == 0 && (hasLooked == false)){
+
+        if(hasLooked == false){
             System.out.print("look  |   help\n");
             //look | open\nlight | get
         }
-        if(room == 0 && (hasLooked == true) && (hasMatches == false)){
+        if((hasLooked == true) && (hasMatches == false)){
             System.out.print("look  |   help\nget");
         }
-        if(room == 0 && (hasMatches == true)){
+        if(hasMatches == true){
             System.out.print("look  |   help\nlight");
         }
         System.out.println("\nThese are all the things you can interact with right now:");
-        if(room == 0 && (hasLooked == false)){
+        if(hasLooked == false){
             System.out.print("\n");
         }
-        if(room == 0 && (hasLooked == true)){
+        if(hasLooked == true){
             System.out.print("matches\n");
         }
         }
         if(input.equals("look")){
             hasLooked = true;
-            if(room == 0){
             System.out.print("\nThe brightness of your surroundings causes you great pain. You squint as you attempt to make out where you may be, but find yourself in a place entirely unfamiliar. A vast, empty expanse stretches out before you. A box of matches sits in front of you.\n");
-            }
         }
         if(input.equals("look matches")){
             System.out.println("\nA box of matches, with a well worn magnesium strike pad on the side.");
@@ -52,8 +53,12 @@ public class Main{
         }
         if(input.equals("light matches")){
             room = 1;
-            System.out.println("You strike the match, and as it sparks to life, you are transported somewhere new. You have 30 matches left.");
+            matches--;
+            System.out.printf("You strike the match, and as it sparks to life, you are transported somewhere new. You have %d matches left.\n",matches);
         }
         seekInput();
+        }
+        if(room == 1)
+        System.out.print("You win!");
     }
 }
