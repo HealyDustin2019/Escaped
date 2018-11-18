@@ -9,6 +9,7 @@ public class Main {
  public static boolean hasTouchedDesk = false;
  public static boolean hasLookedatDecoration = false;
  public static boolean hasPressedButton = false;
+ public static int walk = 0;
  public static void main(String[] args) {
   initialize();
  }
@@ -35,6 +36,7 @@ public class Main {
    hasTouchedDesk = false;
    hasLookedatDecoration = false;
    hasPressedButton = false;
+   walk = 0;
   }
   if (input.equals("db1")) {
    room = 1;
@@ -46,6 +48,10 @@ public class Main {
    hasTouchedDesk = false;
    hasLookedatDecoration = false;
    hasPressedButton = false;
+   walk = 0;
+  }
+  if (input.equals("db2")){
+    room = 2;
   }
   if (input.equals("quit")){
     matches = 0;
@@ -151,7 +157,7 @@ public class Main {
      }
      if (hasLooked == false){
        hasLooked = true;
-       System.out.println("\nYou find yourself in total darkness aside from the light emitted from your match, which is already beginning to dwindle. You will have to routinely light them if you want to see anything from here on out.As your eyes begin to adjust to the darkness, you come to the conclusion you are in some sort of study. Piles of books loom menacingly over you, threatening to topple at any moment. An ornate wooden desk sits before you. A set of stairs spirals overhead, peculiarly ending a good ten feet above the floor.\n");
+       System.out.println("\nYou find yourself in total darkness aside from the light emitted from your match, which is already beginning to dwindle. You will have to routinely light them if you want to see anything from here on out. As your eyes begin to adjust to the darkness, you come to the conclusion you are in some sort of study. Piles of books loom menacingly over you, threatening to topple at any moment. An ornate wooden desk sits before you. A set of stairs spirals overhead, peculiarly ending a good ten feet above the floor.\n");
        matchCount();
      }
      if (hasLooked == true && hasTouchedBooks == true){
@@ -160,26 +166,30 @@ public class Main {
        matchCount();
      }
    }
-   if (input.equals("look books")) {
-    System.out.println("\nYou examine a column of tomes, noticing only now how truly precarious each book's position is. It almost begs you to touch it.\n");
-    matchCount();
+   if (hasTouchedBooks == false){
+     if (input.equals("look books")) {
+       System.out.println("\nYou examine a column of tomes, noticing only now how truly precarious each book's position is. It almost begs you to touch it.\n");
+       matchCount();
+     }
+     if (input.equals("touch books")) {
+       System.out.println("\nYou lay a finger upon the spine of a rather weighty book situated in the middle of the stack and apply the slightest pressure. In one great avalance of knowledge, you find yourself knocked on the floor, covered in a mountain of literature and paper cuts. It seems you may have lost a few matches in the whole ordeal.\n");
+       matches -= 7;
+       matchCount();
+       hasTouchedBooks = true;
+     }
    }
-   if (input.equals("touch books")) {
-    System.out.println("\nYou lay a finger upon the spine of a rather weighty book situated in the middle of the stack and apply the slightest pressure. In one great avalance of knowledge, you find yourself knocked on the floor, covered in a mountain of literature and paper cuts. It seems you may have lost a few matches in the whole ordeal.\n");
-    matches -= 7;
-    matchCount();
-    hasTouchedBooks = true;
+   if (hasLookedatDesk == true) {
+     if (input.equals("look desk")) {
+     System.out.println("\nYou look at the old desk. Hundreds of pages soaked with ink are messily sprawled across it.\n");
+     matchCount();
+     }
    }
-   if (input.equals("look desk")) {
-    System.out.println("\nYou look at the old desk. Hundreds of pages soaked with ink are messily sprawled across it.\n");
-    matchCount();
-    if (hasLookedatDesk == false) {
-     System.out.println("You notice a few stray matches resting upon a crystal ashtray.\n");
+    if (input.equals("look desk") && hasLookedatDesk == false) {
+     System.out.println("\nYou glance at the desk and notice a few stray matches resting upon a crystal ashtray.\n");
      matches += 4;
      hasLookedatDesk = true;
      matchCount();
     }
-   }
    if (input.equals("touch desk")) {
     System.out.println("\nYou place your hand upon the desk's corner, lightly running it across the intricate designs carved upon the wooden edge. You are suprised when your fingers fall upon something unusually cold.\n");
     hasTouchedDesk = true;
@@ -219,13 +229,17 @@ public class Main {
      hasPressedButton = true;
      matchCount();
    }
+   if (input.equals("look button")){
+     System.out.println("\nYou take a look at the button, unsure of what to do with it. Then, in an astounding revelation, you remember: buttons are meant to be pressed.\n");
+   }
    if (input.equals("look ladder")){
-     System.out.println("\nOh look, a ladder. How convenient that this ladder has emerged, now allowing you to go a direction which was previously unavailable to you! This truly is a happy and fortuitous occassion. Congratulations and good luck in all future laddering endeavours.\n");
+     System.out.println("\nOh look, a ladder. How convenient that this ladder has emerged, now allowing you to go a direction which was previously unavailable to you! This truly is a happy and fortuitous occasion. Congratulations and good luck in all future laddering endeavours.\n");
      matchCount();
    }
    if (input.equals("climb ladder") || input.equals("climb stair")){
      System.out.println("\nYou clamber up the ladder and onto the stairs. You flinch as the stairs begin to move and you are lifted towards a large balcony.\n");
      room = 2;
+     hasLooked = false;
      matchCount();
    }
    if (input.equals("climb desk")){
@@ -252,18 +266,68 @@ public class Main {
      System.out.println("\nYou think about pressing it, but realize how dumb you would have to be to just go randomly pressing things. You are better than this.\n");
      matchCount();
    }
-   if (matches <= 0) {
+   if (matches < 0) {
     System.out.println("\nYou have succumbed to the darkness.\n");
     return "Fail";
    }
    seekInput();
   }
   if (room == 2){
-    System.out.println("\nYou win.\n");
-  }
+    if (input.equals("help")) {
+     System.out.println("\nThese are all actions you can take right now:");
+     if (hasLooked == false) {
+       System.out.println("look  |   help");
+     }
+     if (hasLooked == true) {
+       System.out.println("look  |   help\nwalk");
+     }
+     System.out.println("\nThese are all the things you can interact with right now:");
+     if (hasLooked == false || hasLooked == true){
+       System.out.print("\n");
+     }
+    }
+     if (input.equals("look")){
+       if (hasLooked == true){
+         System.out.println("\nA hallway stretches out in front of you, its end obscured by darkness.\n");
+         matchCount();
+       }
+       if (hasLooked == false){
+         hasLooked = true;
+         System.out.println("\nAs you step onto the balcony, the stairs recede back to their original position. A hallway stretches out in front of you, its end obscured by darkness.\n");
+         matchCount();
+       }
+     }
+     if (input.equals("walk") && walk == 0){
+       walk++;
+       if (matches == 4){
+         System.out.println("\nYou take your first step into the hall. You are startled by a strange noise coming from deep within the darkness.\n");
+         matchCount();
+       }
+       if (matches < 4){
+         System.out.println("\nYou take your first step into the hall. You are startled by a strange noise coming from deep within the darkness. You stumble and fall. As you are getting up, you notice some mataches strewn across the ground.\n");
+         matches = 4;
+         matchCount();
+       }
+       if (matches > 4){
+         System.out.println("\nYou take your first step into the hall. You are startled by a strange noise coming from deep within the darkness. You stumble and drop some matches.\n");
+         matches = 4;
+         matchCount();
+       }
+     }
+     if (input.equals("walk") && walk == 1){
+       System.out.println("\n \n");
+     }
+     if (matches < 0) {
+       System.out.println("\nYou have succumbed to the darkness.\n");
+       return "Fail";
+     }
+   seekInput();
+  
   return "Fail";
  }
- public static void matchCount() {
+  return "Fail";
+ }
+public static void matchCount() {
   matches--;
   if (matches >= 0)
    System.out.printf("You have %d matches left.\n\n", matches);
