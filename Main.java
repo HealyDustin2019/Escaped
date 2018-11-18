@@ -93,6 +93,10 @@ public class Main {
     System.out.printf("\nYou strike the match, and as it sparks to life, you are transported somewhere new. You have %d matches left.\n\n", matches);
     hasLooked = false;
    }
+   if (matches <= 0) {
+    System.out.println("\nYou have succumbed to the darkness.\n");
+    return "Fail";
+   }
    seekInput();
   }
   if (room == 1) {
