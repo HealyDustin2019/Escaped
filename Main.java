@@ -23,6 +23,8 @@ public class Main {
   check(input);
  }
  public static String check(String input) {
+  if (room == 3)
+   return "Success";
   if (input.equals("debug")) {
    matches = 1000;
   }
@@ -275,8 +277,11 @@ public class Main {
   if (room == 2){
     if (input.equals("help")) {
      System.out.println("\nThese are all actions you can take right now:");
-     if (hasLooked == false) {
+     if (hasLooked == false && walk < 4) {
        System.out.println("look  |   help");
+     }
+     if (hasLooked == false && walk >= 4) {
+       System.out.println("look  |   help\nwalk");
      }
      if (hasLooked == true) {
        System.out.println("look  |   help\nwalk");
@@ -287,15 +292,45 @@ public class Main {
      }
     }
      if (input.equals("look")){
-       if (hasLooked == true){
+       if (hasLooked == true && walk == 0){
          System.out.println("\nA hallway stretches out in front of you, its end obscured by darkness.\n");
          matchCount();
        }
-       if (hasLooked == false){
+       if (hasLooked == true && walk > 0){
+         System.out.println("\nYou look back, expecting to see the balcony you just left. However, you are dismayed to find that something frightening has occurred; where once there was a balcony, now is just more hallway, going on for as far as you can see. You steel your nerves and prepare to move onward.\n");
+         matchCount();
+       }
+       if (hasLooked == false && walk == 0){
          hasLooked = true;
          System.out.println("\nAs you step onto the balcony, the stairs recede back to their original position. A hallway stretches out in front of you, its end obscured by darkness.\n");
          matchCount();
        }
+       if (hasLooked == false && walk >= 4){
+         System.out.println("\nYou look out upon a beautiful seascape. As you begin to step forward, you quickly realize there is not much to step on. A rocky landing goes about a foor in front of where you stand, quickly dropping off into a sheer cliff face. You recognize the crashing waves below you as the source of the noises you previously heard.\n");
+       }
+     }
+     if (input.equals("walk") && walk == 4){
+       walk++;
+       System.out.println("\nYou look back into the dark of the hallway, and then out into the waters below. You decide you are not going back in there. You step beyond the cliff and begin your descent, wind screaming past your ears as you yourself scream towards the ocean. You realize all too late that stepping off of cliffs is usually not a very good decision. You close your eyes and pray to God as you fall to what you are sure will be your demise. Just as you are about to impact, there is silence.\n\n");
+       Scanner scan = new Scanner(System.in);
+       String end = scan.nextLine();
+       System.out.println("You open your eyes and sit up off the ground, once again unsure of what just happened. You look around and for the first time find yourself in a familiar place: your bedroom. From what you can tell, it appears you fell off your bed sometime in the night while having a nightmare. You let out a haggard breath and sit back down onto your bed. You can't believe you had such a bad dream; it all had seemed so real at the time. As you lie down to go back to sleep, you feel something in your pocket. You reach your hand in and pull out a small box. You turn on the light beside your bed to get a better look at it. Your heart pounds as you realize that you are holding the matchbox. Suddenly, the light beside your bed flickers off and you are left in total darkness.\n\nYou have one match left.\n");
+       room = 3;
+     }
+     if (input.equals("walk") && walk == 3){
+       System.out.println("\nYou step into the light, blinded at first by its intensity. Soon, your eyes adjust.\n");
+       hasLooked = false;
+       walk++;
+     }
+     if (input.equals("walk") && walk == 2){
+       walk++;
+       System.out.println("\nYou see a faint white light ahead of you. It appears you have finally reached the end of the hall! As you begin to run towards the light, you put the matchbox into your pocket, no longer relying on it to see.\n");
+       matchCount();
+     }
+     if (input.equals("walk") && walk == 1){
+       walk++;
+       System.out.println("\nYou continue slowly down the hall, the noise ahead crescendoing to a deafening roar. A strong gust of wind travels down the hallway, nearly knocking you off balance.\n");
+       matchCount();
      }
      if (input.equals("walk") && walk == 0){
        walk++;
@@ -313,9 +348,6 @@ public class Main {
          matches = 4;
          matchCount();
        }
-     }
-     if (input.equals("walk") && walk == 1){
-       System.out.println("\n \n");
      }
      if (matches < 0) {
        System.out.println("\nYou have succumbed to the darkness.\n");
