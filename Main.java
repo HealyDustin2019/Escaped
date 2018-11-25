@@ -174,7 +174,7 @@ public class Main {
      matchCount();
     }
     if (input.equals("touch books")) {
-     System.out.println("\nYou lay a finger upon the spine of a rather weighty book situated in the middle of the stack and apply the slightest pressure. In one great avalance of knowledge, you find yourself knocked on the floor, covered in a mountain of literature and paper cuts. It seems you may have lost a few matches in the whole ordeal.\n");
+     System.out.println("\nYou lay a finger upon the spine of a rather weighty book situated in the middle of the stack and apply the slightest pressure. In one great avalanche of knowledge, you find yourself knocked on the floor, covered in a mountain of literature and paper cuts. It seems you may have lost a few matches in the whole ordeal.\n");
      matches -= 7;
      matchCount();
      hasTouchedBooks = true;
@@ -236,6 +236,10 @@ public class Main {
    }
    if (input.equals("look ladder")) {
     System.out.println("\nOh look, a ladder. How convenient that this ladder has emerged, now allowing you to go a direction which was previously unavailable to you! This truly is a happy and fortuitous occasion. Congratulations and good luck in all future laddering endeavours.\n");
+    matchCount();
+   }
+   if (input.equals("touch ladder")) {
+    System.out.println("\nYou touch the ladder and feel its innate ladderiness course through you. This is most certainly a ladder.\n");
     matchCount();
    }
    if (input.equals("climb ladder") || input.equals("climb stair")) {
