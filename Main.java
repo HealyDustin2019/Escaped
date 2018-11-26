@@ -11,7 +11,7 @@ public class Main {
  public static boolean hasPressedButton = false;
  public static int walk = 0;
  public static void main(String[] args) {
-  initialize();
+ initialize();
  }
  public static void initialize() {
   System.out.println("You awaken. Type help for a list of commands.\n");
@@ -57,6 +57,7 @@ public class Main {
   }
   if (input.equals("quit")) {
    matches = 0;
+   return "Fail";
   }
   if (room == 0) {
    if (input.equals("help")) {
